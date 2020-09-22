@@ -16,9 +16,17 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
+/**
+ * 业务实现类
+ */
 @Service
 @Slf4j
 public class Input2OutputServiceImpl implements Input2OutputService {
+    /**
+     * 单个处理
+     * @param input 输入对象
+     * @return 输出对象
+     */
     @Override
     public Output singleProcess(Input input) {
         log.info("Processing...");
@@ -31,6 +39,11 @@ public class Input2OutputServiceImpl implements Input2OutputService {
         return new Output(true, String.valueOf(2 * input.getI() + 1));
     }
 
+    /**
+     * 批量处理
+     * @param inputList 输入对象列表
+     * @return 输出对象列表
+     */
     @Override
     public List<Output> multiProcess(List<Input> inputList) {
         ThreadPoolTaskExecutor executor
@@ -60,6 +73,11 @@ public class Input2OutputServiceImpl implements Input2OutputService {
         return outputList;
     }
 
+    /**
+     * 异步处理
+     * @param input 输入对象
+     * @return 输出Future对象
+     */
     @Async("threadPoolTaskExecutor")
     @Override
     public Future<Output> asyncProcess(Input input) {
